@@ -6,7 +6,7 @@ if __name__ == "__main__":
     res = 0
     for arg in sys.argv:
         if i != 0:
-           res += int(arg)
-        i = 1
+            res += int(arg)
+            i = 1
 
     print(res)
