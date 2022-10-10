@@ -82,8 +82,8 @@ void print_python_bytes(PyObject *p)
  */
 void print_python_float(PyObject *p)
 {
-	unsigned char i, size;
 	PyFloatObject *f = (PyFloatObject *)p;
+	float n = 0.0;
 
 	printf("[.] float object info\n");
 	if (strcmp(p->ob_type->tp_name, "float") != 0)
@@ -92,5 +92,9 @@ void print_python_float(PyObject *p)
 		return;
 	}
 
-	printf("  value: %ld\n", f->ob_fval);
+	n = f->ob_fval;
+	if ((int) n == n)
+		printf("  value: %.1f\n", f->ob_fval);
+	else
+		printf("  value: %.16g\n", f->ob_fval);
 }
