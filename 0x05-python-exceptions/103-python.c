@@ -37,6 +37,8 @@ void print_python_list(PyObject *p)
 		else if (strcmp(type, "float") == 0)
 			print_python_float(list->ob_item[i]);
 	}
+
+	fflush(stdout);
 }
 
 /**
@@ -73,6 +75,8 @@ void print_python_bytes(PyObject *p)
 		else
 			printf(" ");
 	}
+
+	fflush(stdout);
 }
 
 /**
@@ -97,4 +101,6 @@ void print_python_float(PyObject *p)
 		printf("  value: %.1f\n", f->ob_fval);
 	else
 		printf("  value: %.16g\n", f->ob_fval);
+
+	fflush(stdout);
 }
