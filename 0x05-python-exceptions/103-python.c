@@ -86,8 +86,9 @@ void print_python_bytes(PyObject *p)
  */
 void print_python_float(PyObject *p)
 {
+	char *buffer = NULL;
+
 	PyFloatObject *f = (PyFloatObject *)p;
-	float n = 0.0;
 
 	fflush(stdout);
 
@@ -98,9 +99,8 @@ void print_python_float(PyObject *p)
 		return;
 	}
 
-	n = f->ob_fval;
-	if ((int) n == n)
-		printf("  value: %.1f\n", f->ob_fval);
-	else
-		printf("  value: %.16g\n", f->ob_fval);
+	buffer = PyOS_double_to_string(f->ob_fval, 'r', 0,
+			Py_DTSF_ADD_DOT_0, NULL);
+	printf("  value: %s\n", buffer);
+	PyMem_Free(buffer);
 }
