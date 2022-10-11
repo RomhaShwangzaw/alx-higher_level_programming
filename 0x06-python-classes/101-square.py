@@ -75,7 +75,7 @@ class Square:
         ''' Define the print() representation of a Square '''
 
         if self.__size == 0:
-            print()
+            pass
 
         else:
             for i in range(self.__position[1]):
@@ -88,4 +88,7 @@ class Square:
                 for j in range(self.__size):
                     print("#", end="")
 
-                print()
+                if i != self.__size - 1:
+                    print()
+
+        return ""
