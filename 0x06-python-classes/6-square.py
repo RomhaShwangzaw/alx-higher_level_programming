@@ -8,8 +8,8 @@ class Square:
     def __init__(self, size=0, position=(0, 0)):
         ''' Initialization function '''
 
-        self.__size = size
-        self.__position = position
+        self.size = size
+        self.position = position
 
     @property
     def size(self):
@@ -53,10 +53,7 @@ class Square:
         return self.__size * self.__size
 
     def my_print(self):
-        '''
-            prints in stdout the square with the character #:
-            if size is equal to 0, print an empty line
-        '''
+        ''' Print the square with the # character '''
 
         if self.__size == 0:
             print()
