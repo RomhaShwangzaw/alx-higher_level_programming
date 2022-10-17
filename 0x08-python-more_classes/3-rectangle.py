@@ -46,6 +46,9 @@ class Rectangle:
 
     def __str__(self):
         ''' Returns a string representing the rectangle '''
+        if self.__height == 0 or self.__width == 0:
+            return ""
+
         output = ""
         for i in range(self.__height):
             for j in range(self.__width):
