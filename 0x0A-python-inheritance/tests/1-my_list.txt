@@ -39,3 +39,13 @@ The function also works with an empty list
 	[]
 	>>> print(new_list)
 	[]
+
+If ``print_sorted(...)`` is called on a list of different types, a TypeError
+will be raised.
+
+::
+
+    >>> my_list = MyList([1, "Betty", "Holberton", 5])
+    >>> my_list.print_sorted()
+    Traceback (most recent call last):
+    TypeError: '<' not supported between instances of 'str' and 'int'
