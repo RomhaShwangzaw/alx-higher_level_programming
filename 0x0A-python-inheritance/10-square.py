@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 '''A Square module'''
 
-BaseGeometry = __import__('7-base_geometry').BaseGeometry
+Rectangle = __import__('9-rectangle').Rectangle
 
 
-class Square(BaseGeometry):
+class Square(Rectangle):
     '''A Square class'''
 
     def __init__(self, size):
@@ -14,8 +14,8 @@ class Square(BaseGeometry):
 
     def area(self):
         '''calculates the area of a square'''
-        return self._size * self.__size
+        return self.__size * self.__size
 
     def __str__(self):
-        '''returns a string description of the rectangle'''
+        '''returns a string description of a square'''
         return "[Rectangle] " + str(self.__size) + "/" + str(self.__size)
