@@ -3,7 +3,9 @@
 
 
 class Base:
-    '''A Base class that defines the 'id' attribute for the rest of the classes'''
+    '''A Base class that defines the 'id' attribute
+    for the rest of the classes
+    '''
     __nb_objects = 0
 
     def __init__(self, id=None):
