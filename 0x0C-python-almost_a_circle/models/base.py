@@ -3,6 +3,7 @@
 import json
 from os.path import exists
 import csv
+import turtle
 
 
 class Base:
@@ -168,10 +169,51 @@ class Base:
                 fieldnames = ['id', 'size', 'x', 'y']
             list_dictionaries = csv.DictReader(f, fieldnames=fieldnames)
             list_dictionaries = [dict([k, int(v)] for k, v in d.items())
-                            for d in list_dictionaries]
+                                 for d in list_dictionaries]
 
         for dictionary in list_dictionaries:
             obj = cls.create(**dictionary)
             list_objs.append(obj)
 
         return list_objs
+
+    @staticmethod
+    def draw(list_rectangles, list_squares):
+        '''opens a window and draws all the Rectangles and Squares:
+
+        - You must use the Turtle graphics module
+        - To install it: sudo apt-get install python3-tk
+
+        '''
+        turt = turtle.Turtle()
+        turt.screen.bgcolor("#b7312c")
+        turt.pensize(3)
+        turt.shape("turtle")
+
+        turt.color("#ffffff")
+        for rect in list_rectangles:
+            turt.showturtle()
+            turt.up()
+            turt.goto(rect.x, rect.y)
+            turt.down()
+            for i in range(2):
+                turt.forward(rect.width)
+                turt.left(90)
+                turt.forward(rect.height)
+                turt.left(90)
+            turt.hideturtle()
+
+        turt.color("#b5e3d8")
+        for sq in list_squares:
+            turt.showturtle()
+            turt.up()
+            turt.goto(sq.x, sq.y)
+            turt.down()
+            for i in range(2):
+                turt.forward(sq.width)
+                turt.left(90)
+                turt.forward(sq.height)
+                turt.left(90)
+            turt.hideturtle()
+
+        turtle.exitonclick()
