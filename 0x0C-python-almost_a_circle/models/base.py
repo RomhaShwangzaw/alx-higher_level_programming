@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 '''Defines a Base class for all other classes'''
 import json
+from os.path import exists
 
 
 class Base:
@@ -88,3 +89,31 @@ class Base:
         obj = cls(1, 1)
         obj.update(**dictionary)
         return obj
+
+    @classmethod
+    def load_from_file(cls):
+        '''returns a list of instances:
+
+        - The filename must be: <Class name>.json - example: Rectangle.json
+        - If the file doesn’t exist, return an empty list
+        - Otherwise, return a list of instances - the type of these instances
+          depends on cls (current class using this method)
+        - You must use the from_json_string and create methods
+          (implemented previously)
+
+        '''
+        filename = cls.__name__ + ".json"
+        list_objs = []
+
+        if not exists(filename):
+            return list_objs
+
+        with open(filename, encoding='utf-8') as f:
+            json_str = f.read()
+
+        list_dictionaries = cls.from_json_string(json_str)
+        for dictionary in list_dictionaries:
+            obj = cls.create(**dictionary)
+            list_objs.append(obj)
+
+        return list_objs
