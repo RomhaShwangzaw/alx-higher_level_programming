@@ -60,3 +60,20 @@ class Square(Rectangle):
                     self.x = v
                 elif k == 'y':
                     self.y = v
+
+    def to_dictionary(self):
+        '''returns the dictionary representation of a Square:
+
+        * This dictionary must contain:
+            - id
+            - size
+            - x
+            - y
+
+        '''
+        square_dict = {}
+        square_dict['id'] = self.id
+        square_dict['size'] = self.size
+        square_dict['x'] = self.x
+        square_dict['y'] = self.y
+        return square_dict
