@@ -2,6 +2,7 @@
 '''Defines a Base class for all other classes'''
 import json
 from os.path import exists
+import csv
 
 
 class Base:
@@ -86,9 +87,10 @@ class Base:
         - You are not allowed to use eval
 
         '''
-        obj = cls(1, 1)
-        obj.update(**dictionary)
-        return obj
+        if dictionary and dictionary != {}:
+            obj = cls(1, 1)
+            obj.update(**dictionary)
+            return obj
 
     @classmethod
     def load_from_file(cls):
@@ -112,6 +114,62 @@ class Base:
             json_str = f.read()
 
         list_dictionaries = cls.from_json_string(json_str)
+        for dictionary in list_dictionaries:
+            obj = cls.create(**dictionary)
+            list_objs.append(obj)
+
+        return list_objs
+
+    @classmethod
+    def save_to_file_csv(cls, list_objs):
+        '''Write the CSV serialization of a list of objects to a file.
+
+        - The filename must be: <Class name>.csv - example: Rectangle.csv
+        - Has the same behavior as the JSON serialization
+        - Format of the CSV:
+            * Rectangle: <id>,<width>,<height>,<x>,<y>
+            * Square: <id>,<size>,<x>,<y>
+
+        '''
+        filename = cls.__name__ + ".csv"
+        with open(filename, 'w', newline='') as f:
+            if list_objs is None or list_objs == []:
+                f.write('[]')
+            else:
+                if cls.__name__ == "Rectangle":
+                    fieldnames = ['id', 'width', 'height', 'x', 'y']
+                else:
+                    fieldnames = ['id', 'size', 'x', 'y']
+                writer = csv.DictWriter(f, fieldnames=fieldnames)
+                for obj in list_objs:
+                    writer.writerow(obj.to_dictionary())
+
+    @classmethod
+    def load_from_file_csv(cls):
+        '''Return a list of classes instantiated from a CSV file.
+
+        - Reads from `<cls.__name__>.csv`.
+
+        - Returns:
+            * If the file does not exist - an empty list.
+            * Otherwise - a list of instantiated classes.
+
+        '''
+        filename = cls.__name__ + ".csv"
+        list_objs = []
+
+        if not exists(filename):
+            return list_objs
+
+        with open(filename, 'r', newline='') as f:
+            if cls.__name__ == "Rectangle":
+                fieldnames = ['id', 'width', 'height', 'x', 'y']
+            else:
+                fieldnames = ['id', 'size', 'x', 'y']
+            list_dictionaries = csv.DictReader(f, fieldnames=fieldnames)
+            list_dictionaries = [dict([k, int(v)] for k, v in d.items())
+                            for d in list_dictionaries]
+
         for dictionary in list_dictionaries:
             obj = cls.create(**dictionary)
             list_objs.append(obj)
