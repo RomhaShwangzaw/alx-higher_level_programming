@@ -11,6 +11,6 @@ if __name__ == "__main__":
     cur.execute("SELECT * FROM states ORDER BY id ASC")
     query_rows = cur.fetchall()
     for id, name in query_rows:
-        print('({}, {})'.format(id, name))
+        print("({}, '{}')".format(id, name))
     cur.close()
     conn.close()
